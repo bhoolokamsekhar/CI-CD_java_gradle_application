@@ -1,19 +1,31 @@
-pipeline{
+pipeline {
+
     agent any
-    stages{
-        stage("sonar quality check"){
+
+    stages {
+
+        stage("sonar quality check") {
+
             agent {
                 docker {
                     image 'eclipse-temurin:11'
                 }
             }
-            steps{
-                script{
+
+            steps {
+
+                script {
+
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
-                            sh 'chmod +x gradlew'
-                            sh './gradlew sonarqube'
-                    
-                    }    
+
+                        sh '''
+                            export GRADLE_USER_HOME="$WORKSPACE/.gradle"
+
+                            chmod +x gradlew
+
+                            ./gradlew sonarqube
+                        '''
+                    }
                 }
             }
         }
