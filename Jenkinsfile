@@ -23,7 +23,7 @@ pipeline {
 
                             chmod +x gradlew
 
-                            ./gradlew sonarqube
+                            ./gradlew sonarqube --info
                         '''
                     }
                 }
