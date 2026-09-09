@@ -4,7 +4,7 @@ pipeline{
         stage("sonar quality check"){
             agent {
                 docker {
-                    image 'openjdk:25'
+                    image 'eclipse-temurin:25'
                 }
             }
             steps{
