@@ -30,7 +30,7 @@ pipeline {
                             ./gradlew sonarqube --stacktrace --info
                         '''
                     }
-                    timeout(time: 1f unit: 'hours') {
+                    timeout(time: 1, unit: 'hours') {
                       def qg = waitForQualityGate()
                       if (qg.status != 'OK') {
                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
