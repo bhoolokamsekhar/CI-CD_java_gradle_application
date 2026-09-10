@@ -1,6 +1,9 @@
 pipeline {
 
     agent any
+    environment{
+        VERSION = "${env.BUILD_ID}"
+    }
 
     stages {
 
@@ -39,5 +42,23 @@ pipeline {
                 }
             }
         }
-    }
-}
+        stage ("docker build & docker push"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_pass')]) {
+                             sh '''
+                                docker build -t 3.110.82.131:8083/springapp:${VERSION} .
+                                docker login 3.110.82.131:8083 -u admin -p "$docker_pass"
+                                echo "$docker_pass" | docker login 3.110.82.131:8083 -u admin --password-stdin
+                                docker push 3.110.82.131:8083/springapp:${VERSION}
+                                docker rmi 3.110.82.131:8083/springapp:${VERSION}
+
+                            '''
+                    }
+                }    
+            }        
+
+        }       
+    }        
+}        
+    
