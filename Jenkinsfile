@@ -58,11 +58,11 @@ pipeline {
             }        
 
         }
-        post {
-            always {
-                mail bcc: '', body: "<br>Project: ${env.Job_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}",
-            }
+       
+    }
+    post {
+        always {
+            mail bcc: '', body: "<br>Project: ${env.Job_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}",
         }
-      
-    }          
-}    
+    }
+}
