@@ -58,7 +58,16 @@ pipeline {
             }        
 
         }
-       
+        stage('identifying misconfiguration using datree in helm charts'){
+            steps{
+                script{
+
+                    dir('kubernets/') {    
+                        sh 'helm datree test myapp/'
+                    }
+                }
+            }
+        }
     }
         post {
         always {
@@ -68,16 +77,6 @@ pipeline {
                 subject: "Jenkins Build ${env.BUILD_NUMBER}",
                 body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br>URL de build: ${env.BUILD_URL}"
             )
-        }
-    }
-    stage('identifying misconfiguration using datree in helm charts'){
-        steps{
-            script{
-
-                dir('kubernets/') {    
-                    sh 'helm datree test myapp/'
-                }
-            }
         }
     }
 
